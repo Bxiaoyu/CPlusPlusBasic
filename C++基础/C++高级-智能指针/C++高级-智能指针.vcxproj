@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{3c070f94-ea45-49d5-9408-e407c0a11364}</ProjectGuid>
-    <RootNamespace>C对象优化</RootNamespace>
+    <ProjectGuid>{35fc2c2a-0d96-4207-981d-4dc70ae17acc}</ProjectGuid>
+    <RootNamespace>C高级智能指针</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>C++高级-对象优化</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -102,7 +101,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
@@ -128,9 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="test_01_对象优化前言.cpp" />
-    <ClCompile Include="test_03_优化案例String类.cpp" />
-    <ClCompile Include="test_02_对象优化规则总结.cpp" />
+    <ClCompile Include="test_01_简介.cpp" />
+    <ClCompile Include="test_02_不带引用计数的智能指针.cpp" />
+    <ClCompile Include="test_03_带引用计数的智能指针.cpp" />
+    <ClCompile Include="test_04_强智能指针交叉引用问题.cpp" />
+    <ClCompile Include="test_05_多线程访问共享对象的线程安全问题.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,7 +1,7 @@
 #include <iostream>
 
 using namespace std;
-
+#if 0
 class Test
 {
 public:
@@ -71,3 +71,4 @@ int main()
 	test_02();
 	return 0;
 }
+#endif

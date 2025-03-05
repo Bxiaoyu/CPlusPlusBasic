@@ -15,13 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test_03_优化案例String类.cpp">
+    <ClCompile Include="test_01_简介.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_01_对象优化前言.cpp">
+    <ClCompile Include="test_02_不带引用计数的智能指针.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_02_对象优化规则总结.cpp">
+    <ClCompile Include="test_03_带引用计数的智能指针.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="test_04_强智能指针交叉引用问题.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="test_05_多线程访问共享对象的线程安全问题.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -13,7 +13,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "C++面向对象", "C++面�
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "C++STL六大组件", "C++STL六大组件\C++STL六大组件.vcxproj", "{18D75843-135C-4413-89EC-CE0B60A00830}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "C++对象优化", "C++对象优化\C++对象优化.vcxproj", "{3C070F94-EA45-49D5-9408-E407C0A11364}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "C++高级-对象优化", "C++对象优化\C++对象优化.vcxproj", "{3C070F94-EA45-49D5-9408-E407C0A11364}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "C++高级-智能指针", "C++高级-智能指针\C++高级-智能指针.vcxproj", "{35FC2C2A-0D96-4207-981D-4DC70AE17ACC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,14 @@ Global
 		{3C070F94-EA45-49D5-9408-E407C0A11364}.Release|x64.Build.0 = Release|x64
 		{3C070F94-EA45-49D5-9408-E407C0A11364}.Release|x86.ActiveCfg = Release|Win32
 		{3C070F94-EA45-49D5-9408-E407C0A11364}.Release|x86.Build.0 = Release|Win32
+		{35FC2C2A-0D96-4207-981D-4DC70AE17ACC}.Debug|x64.ActiveCfg = Debug|x64
+		{35FC2C2A-0D96-4207-981D-4DC70AE17ACC}.Debug|x64.Build.0 = Debug|x64
+		{35FC2C2A-0D96-4207-981D-4DC70AE17ACC}.Debug|x86.ActiveCfg = Debug|Win32
+		{35FC2C2A-0D96-4207-981D-4DC70AE17ACC}.Debug|x86.Build.0 = Debug|Win32
+		{35FC2C2A-0D96-4207-981D-4DC70AE17ACC}.Release|x64.ActiveCfg = Release|x64
+		{35FC2C2A-0D96-4207-981D-4DC70AE17ACC}.Release|x64.Build.0 = Release|x64
+		{35FC2C2A-0D96-4207-981D-4DC70AE17ACC}.Release|x86.ActiveCfg = Release|Win32
+		{35FC2C2A-0D96-4207-981D-4DC70AE17ACC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
