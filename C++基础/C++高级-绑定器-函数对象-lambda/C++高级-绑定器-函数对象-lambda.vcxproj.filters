@@ -18,22 +18,19 @@
     <ClCompile Include="test_01_简介.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_02_不带引用计数的智能指针.cpp">
+    <ClCompile Include="test_02_STL绑定器.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_03_带引用计数的智能指针.cpp">
+    <ClCompile Include="test_03_C++11提供的绑定器和函数对象-function.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_04_强智能指针交叉引用问题.cpp">
+    <ClCompile Include="test_04_C++11提供的绑定器和函数对象-bind.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_05_多线程访问共享对象的线程安全问题.cpp">
+    <ClCompile Include="test_05_lambda表达式.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_06_make_shared_推荐使用.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="test_07_自定义智能指针删除器.cpp">
+    <ClCompile Include="test_06_模板的完全特例化和部分特例化.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

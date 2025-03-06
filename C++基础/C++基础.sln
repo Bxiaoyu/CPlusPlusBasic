@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "C++高级-对象优化", "C
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "C++高级-智能指针", "C++高级-智能指针\C++高级-智能指针.vcxproj", "{35FC2C2A-0D96-4207-981D-4DC70AE17ACC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "C++高级-绑定器-函数对象-lambda", "C++高级-绑定器-函数对象-lambda\C++高级-绑定器-函数对象-lambda.vcxproj", "{17197953-8ACE-48E3-A011-780B0A89CF2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -81,6 +83,14 @@ Global
 		{35FC2C2A-0D96-4207-981D-4DC70AE17ACC}.Release|x64.Build.0 = Release|x64
 		{35FC2C2A-0D96-4207-981D-4DC70AE17ACC}.Release|x86.ActiveCfg = Release|Win32
 		{35FC2C2A-0D96-4207-981D-4DC70AE17ACC}.Release|x86.Build.0 = Release|Win32
+		{17197953-8ACE-48E3-A011-780B0A89CF2C}.Debug|x64.ActiveCfg = Debug|x64
+		{17197953-8ACE-48E3-A011-780B0A89CF2C}.Debug|x64.Build.0 = Debug|x64
+		{17197953-8ACE-48E3-A011-780B0A89CF2C}.Debug|x86.ActiveCfg = Debug|Win32
+		{17197953-8ACE-48E3-A011-780B0A89CF2C}.Debug|x86.Build.0 = Debug|Win32
+		{17197953-8ACE-48E3-A011-780B0A89CF2C}.Release|x64.ActiveCfg = Release|x64
+		{17197953-8ACE-48E3-A011-780B0A89CF2C}.Release|x64.Build.0 = Release|x64
+		{17197953-8ACE-48E3-A011-780B0A89CF2C}.Release|x86.ActiveCfg = Release|Win32
+		{17197953-8ACE-48E3-A011-780B0A89CF2C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
