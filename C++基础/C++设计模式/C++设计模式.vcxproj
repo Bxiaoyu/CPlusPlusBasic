@@ -127,8 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="代理模式.cpp" />
     <ClCompile Include="单例模式.cpp" />
     <ClCompile Include="工厂模式.cpp" />
+    <ClCompile Include="装饰器模式.cpp" />
+    <ClCompile Include="观察者模式.cpp" />
+    <ClCompile Include="适配器模式.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

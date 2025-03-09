@@ -21,5 +21,17 @@
     <ClCompile Include="工厂模式.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="代理模式.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="适配器模式.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="装饰器模式.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="观察者模式.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
