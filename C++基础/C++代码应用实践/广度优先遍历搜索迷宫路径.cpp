@@ -1,12 +1,17 @@
 #include <iostream>
 #include <algorithm>
-#include <stack>
+#include <queue>
+#include <vector>
 
 using namespace std;
 
 /*
-* 深度优先遍历：栈结构或递归，能往下走就一直往下走
-* 深度遍历搜索迷宫路径，软件运行如下：
+* 广度优先遍历寻找最短路径：
+* 层层扩张的方式-》队列
+* 需要开辟额外的空间（row*col）来进行迷宫路径的信息记录
+* 二维数组映射到一维数组：x * row + y
+* 
+* 广度遍历搜索迷宫路径，软件运行如下：
 * 请输入迷宫行列数（例如：10 10）：5 5
 * 请输入迷宫的路径信息（0表示可以走，1表示不能走）：
 * 0 0 0 1 1
@@ -14,7 +19,7 @@ using namespace std;
 * 1 1 0 1 1
 * 1 1 0 0 1
 * 1 1 1 0 0
-* 
+*
 * 迷宫搜索中
 * >>>如果没有路径，直接输出<<<
 * 不存在一条迷宫路径
@@ -25,7 +30,6 @@ using namespace std;
 * 1 1 * * 1
 * 1 1 1 * *
 */
-
 
 // 定义每一个节点的四个方向
 const int RIGHT = 0;
@@ -53,6 +57,8 @@ public:
 		{
 			_pMaze[i] = new Node[_col];
 		}
+
+		_pPath.resize(_row * _col);  // 我们也不知道迷宫路径具体数量，按最大分配
 	}
 
 	// 初始化迷宫路径节点
@@ -79,17 +85,17 @@ public:
 					continue;
 				}
 
-				if (j < _col - 1 && _pMaze[i][j+1]._val == 0)
+				if (j < _col - 1 && _pMaze[i][j + 1]._val == 0)
 				{
 					_pMaze[i][j]._state[RIGHT] = YES;
 				}
 
-				if (i < _row - 1 && _pMaze[i+1][j]._val == 0)
+				if (i < _row - 1 && _pMaze[i + 1][j]._val == 0)
 				{
 					_pMaze[i][j]._state[DOWN] = YES;
 				}
 
-				if (j > 0 && _pMaze[i][j-1]._val == 0)
+				if (j > 0 && _pMaze[i][j - 1]._val == 0)
 				{
 					_pMaze[i][j]._state[LEFT] = YES;
 				}
@@ -110,36 +116,39 @@ public:
 			return;
 		}
 
-		_stack.push(_pMaze[0][0]);
+		_queue.push(_pMaze[0][0]);
 
-		while (!_stack.empty())
+		while (!_queue.empty())
 		{
-			Node top = _stack.top();
-			int x = top._x;
-			int y = top._y;
-
-			// 已经找到右下角出口的迷宫路径
-			if (x == _row - 1 && y == _col - 1)
-			{
-				return;
-			}
+			Node front = _queue.front();
+			int x = front._x;
+			int y = front._y;
 
 			// 往右方搜寻
 			if (_pMaze[x][y]._state[RIGHT] == YES)
 			{
 				_pMaze[x][y]._state[RIGHT] = NO;
 				_pMaze[x][y + 1]._state[LEFT] = NO;
-				_stack.push(_pMaze[x][y + 1]);
-				continue;
+				// 在辅助数组中记录节点行走信息
+				_pPath[x * _row + y + 1] = _pMaze[x][y];
+				_queue.push(_pMaze[x][y + 1]);
+				if (check(_pMaze[x][y+1]))
+				{
+					return;
+				}
 			}
 
 			// 往下方搜寻
 			if (_pMaze[x][y]._state[DOWN] == YES)
 			{
 				_pMaze[x][y]._state[DOWN] = NO;
-				_pMaze[x+1][y]._state[UP] = NO;
-				_stack.push(_pMaze[x + 1][y]);
-				continue;
+				_pMaze[x + 1][y]._state[UP] = NO;
+				_pPath[(x + 1) * _row + y] = _pMaze[x][y];
+				_queue.push(_pMaze[x + 1][y]);
+				if (check(_pMaze[x+1][y]))
+				{
+					return;
+				}
 			}
 
 			// 往左方搜寻
@@ -147,8 +156,12 @@ public:
 			{
 				_pMaze[x][y]._state[LEFT] = NO;
 				_pMaze[x][y - 1]._state[RIGHT] = NO;
-				_stack.push(_pMaze[x][y - 1]);
-				continue;
+				_pPath[x * _row + y - 1] = _pMaze[x][y];
+				_queue.push(_pMaze[x][y - 1]);
+				if (check(_pMaze[x][y-1]))
+				{
+					return;
+				}
 			}
 
 			// 往上方搜寻
@@ -156,29 +169,43 @@ public:
 			{
 				_pMaze[x][y]._state[UP] = NO;
 				_pMaze[x - 1][y]._state[DOWN] = NO;
-				_stack.push(_pMaze[x - 1][y]);
-				continue;
+				_pPath[(x - 1) * _row + y] = _pMaze[x][y];
+				_queue.push(_pMaze[x - 1][y]);
+				if (check(_pMaze[x-1][y]))
+				{
+					return;
+				}
 			}
 
-			_stack.pop();
+			// 当前节点出队
+			_queue.pop();
 		}
 	}
 
 	// 显示迷宫路径
 	void showMazePath()
 	{
-		if (_stack.empty())
+		if (_queue.empty())
 		{
 			cout << "不存在一条迷宫路径" << endl;
 			return;
 		}
 		else
 		{
-			while (!_stack.empty())
+			// 回溯寻找迷宫路径节点
+			int x = _row - 1;
+			int y = _col - 1;
+
+			for (;;)
 			{
-				Node top = _stack.top();
-				_pMaze[top._x][top._y]._val = '*';
-				_stack.pop();
+				_pMaze[x][y]._val = '*';
+				if (x == 0 && y == 0)
+				{
+					break;
+				}
+				Node node = _pPath[x * _row + y];  // 回溯
+				x = node._x;
+				y = node._y;
 			}
 
 			for (int i = 0; i < _row; ++i)
@@ -207,10 +234,17 @@ private:
 		int _state[WAY_NUM];  // 节点四个方向状态
 	};
 
+	// 检查是否是右下角的迷宫出口节点
+	bool check(Node& node)
+	{
+		return node._x == _row - 1 && node._y == _col - 1;
+	}
+
 	Node** _pMaze;  // 动态生成迷宫路径
 	int _row;
 	int _col;
-	stack<Node> _stack;  // 栈结构，辅助深度搜索迷宫路径
+	queue<Node> _queue;  // 队列结构，辅助广度搜索迷宫路径
+	vector<Node> _pPath;  // 记录广度优先遍历时，走过的节点信息
 };
 
 #if 0

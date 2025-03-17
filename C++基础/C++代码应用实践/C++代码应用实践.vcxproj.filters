@@ -21,5 +21,17 @@
     <ClCompile Include="深度优先遍历搜索迷宫路径.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="广度优先遍历搜索迷宫路径.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="海量数据查重和TopK问题的综合应用.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="海量数据查重问题解决方案汇总.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="海量数据求Top K问题解决方案汇总.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
