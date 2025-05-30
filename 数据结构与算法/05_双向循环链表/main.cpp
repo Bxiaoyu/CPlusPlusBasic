@@ -3,7 +3,7 @@
 using namespace std;
 
 /*
-* 双向链表
+* 双向循环链表
 */
 
 // 定义双向链表的节点类型
@@ -21,66 +21,62 @@ struct Node
 	Node* next_;  // 指向后一个节点
 };
 
-// 双向链表
-class DoubleLink
+
+class DoubleCircleLink
 {
 public:
-	DoubleLink()
+	DoubleCircleLink()
 	{
 		head_ = new Node();
+		head_->pre_ = head_->next_ = head_;
 	}
 
-	~DoubleLink()
+	~DoubleCircleLink()
 	{
-		Node* p = head_;
-		while (p != nullptr)
+		Node* p = head_->next_;
+		while (p != head_)
 		{
-			head_ = head_->next_;
+			head_->next_ = p->next_;
+			p->next_->pre_ = head_;
 			delete p;
-			p = head_;
+			p = head_->next_;
 		}
+		delete head_;
+		head_ = nullptr;
 	}
 
-	// 头插法
+	// 头插法 O(1)
 	void InsertHead(int val)
 	{
 		Node* node = new Node(val);
 		node->pre_ = head_;
 		node->next_ = head_->next_;
-		if(head_->next_ != nullptr)  // 此条件判断可以完美适配链表为空和不空两种状态的插入行为
-			head_->next_->pre_ = node;
+		head_->next_->pre_ = node;
 		head_->next_ = node;
 	}
 
-	// 尾插法
+	// 尾插法 O(1)
 	void InsertTail(int val)
 	{
-		Node* p = head_;
-
-		while (p->next_ != nullptr)
-		{
-			p = p->next_;
-		}
-
+		// head_->pre_既是尾节点，所以不需要遍历到尾节点
 		Node* node = new Node(val);
-		node->pre_ = p;
-		p->next_ = node;
+		node->pre_ = head_->pre_;
+		node->next_ = head_;
+		head_->pre_->next_ = node;
+		head_->pre_ = node;
 	}
 
-	// 删除节点
+	// 节点删除
 	void Remove(int val)
 	{
 		Node* p = head_->next_;
-		while (p != nullptr)
+		while (p != head_)
 		{
 			if (p->data_ == val)
 			{
 				p->pre_->next_ = p->next_;
-				if (p->next_ != nullptr)
-					p->next_->pre_ = p->pre_;
-				//Node* q = p->next_;  //删除多个
+				p->next_->pre_ = p->pre_;
 				delete p;
-				//p = q;
 				return;
 			}
 
@@ -92,10 +88,13 @@ public:
 	bool Find(int val)
 	{
 		Node* p = head_->next_;
-		while (p != nullptr)
+		while (p != head_)
 		{
 			if (p->data_ == val)
+			{
 				return true;
+			}
+
 			p = p->next_;
 		}
 
@@ -106,20 +105,21 @@ public:
 	void Show()
 	{
 		Node* p = head_->next_;
-		while (p != nullptr)
+		while (p != head_)
 		{
 			cout << p->data_ << " ";
 			p = p->next_;
 		}
 		cout << endl;
 	}
+
 private:
-	Node* head_;  // 指向头节点
+	Node* head_;  // 头节点
 };
 
 int main()
 {
-	DoubleLink dlink;
+	DoubleCircleLink dlink;
 
 	dlink.InsertHead(100);
 
