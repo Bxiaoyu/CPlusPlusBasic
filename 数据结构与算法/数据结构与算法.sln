@@ -19,6 +19,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "07_链式栈", "07_链式�
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "08_环形队列", "08_环形队列\08_环形队列.vcxproj", "{8B53F735-ACDC-4663-9EC5-CC1BFD63A1B5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09_链式队列", "09_链式队列\09_链式队列.vcxproj", "{C5CA977B-CFC0-4DB3-B245-54FC4441E5A2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_二分搜索算法", "10_二分搜索算法\10_二分搜索算法.vcxproj", "{85BEF1AB-C978-4884-A3FB-5B13DDC51525}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -91,8 +95,27 @@ Global
 		{8B53F735-ACDC-4663-9EC5-CC1BFD63A1B5}.Release|x64.Build.0 = Release|x64
 		{8B53F735-ACDC-4663-9EC5-CC1BFD63A1B5}.Release|x86.ActiveCfg = Release|Win32
 		{8B53F735-ACDC-4663-9EC5-CC1BFD63A1B5}.Release|x86.Build.0 = Release|Win32
+		{C5CA977B-CFC0-4DB3-B245-54FC4441E5A2}.Debug|x64.ActiveCfg = Debug|x64
+		{C5CA977B-CFC0-4DB3-B245-54FC4441E5A2}.Debug|x64.Build.0 = Debug|x64
+		{C5CA977B-CFC0-4DB3-B245-54FC4441E5A2}.Debug|x86.ActiveCfg = Debug|Win32
+		{C5CA977B-CFC0-4DB3-B245-54FC4441E5A2}.Debug|x86.Build.0 = Debug|Win32
+		{C5CA977B-CFC0-4DB3-B245-54FC4441E5A2}.Release|x64.ActiveCfg = Release|x64
+		{C5CA977B-CFC0-4DB3-B245-54FC4441E5A2}.Release|x64.Build.0 = Release|x64
+		{C5CA977B-CFC0-4DB3-B245-54FC4441E5A2}.Release|x86.ActiveCfg = Release|Win32
+		{C5CA977B-CFC0-4DB3-B245-54FC4441E5A2}.Release|x86.Build.0 = Release|Win32
+		{85BEF1AB-C978-4884-A3FB-5B13DDC51525}.Debug|x64.ActiveCfg = Debug|x64
+		{85BEF1AB-C978-4884-A3FB-5B13DDC51525}.Debug|x64.Build.0 = Debug|x64
+		{85BEF1AB-C978-4884-A3FB-5B13DDC51525}.Debug|x86.ActiveCfg = Debug|Win32
+		{85BEF1AB-C978-4884-A3FB-5B13DDC51525}.Debug|x86.Build.0 = Debug|Win32
+		{85BEF1AB-C978-4884-A3FB-5B13DDC51525}.Release|x64.ActiveCfg = Release|x64
+		{85BEF1AB-C978-4884-A3FB-5B13DDC51525}.Release|x64.Build.0 = Release|x64
+		{85BEF1AB-C978-4884-A3FB-5B13DDC51525}.Release|x86.ActiveCfg = Release|Win32
+		{85BEF1AB-C978-4884-A3FB-5B13DDC51525}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {509EF83D-A62F-48A6-8A21-3795D8528667}
 	EndGlobalSection
 EndGlobal
