@@ -1,5 +1,5 @@
 #pragma once
-#include "mysql.h"
+#include <mysql.h>
 #include <string>
 
 /*
