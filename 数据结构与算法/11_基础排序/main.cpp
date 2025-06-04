@@ -76,7 +76,29 @@ void InsertSort(int arr[], int size)
 	}
 }
 
-#if 0
+// 希尔排序，相当于对插入排序的优化
+void ShellSort(int arr[], int size)
+{
+	for (int gap = size / 2; gap > 0; gap /= 2)  // 分组数量
+	{
+		for (int i = gap; i < size; i++)
+		{
+			int val = arr[i];
+			int j = i - gap;
+			for (;j >= 0; j -= gap)
+			{
+				if (arr[j] <= val)
+				{
+					break;
+				}
+				arr[j + gap] = arr[j];
+			}
+			arr[j + gap] = val;
+		}
+	}
+}
+
+#if 1
 int main()
 {
 	const int COUNT = 100000;
@@ -103,23 +125,24 @@ int main()
 	end = clock();
 	cout << "BubbleSort spend:" << (end - begin) * 1.0 / CLOCKS_PER_SEC << "s" << endl;
 
-	//begin = clock();
-	//ChoiceSort(brr, COUNT);
-	//end = clock();
-	//cout << "ChoiceSort spend:" << (end - begin) * 1.0 / CLOCKS_PER_SEC << "s" << endl;
+	begin = clock();
+	ChoiceSort(brr, COUNT);
+	end = clock();
+	cout << "ChoiceSort spend:" << (end - begin) * 1.0 / CLOCKS_PER_SEC << "s" << endl;
 
-	//begin = clock();
-	//InsertSort(crr, COUNT);
-	//end = clock();
-	//cout << "InsertSort spend:" << (end - begin) * 1.0 / CLOCKS_PER_SEC << "s" << endl;
+	begin = clock();
+	InsertSort(crr, COUNT);
+	end = clock();
+	cout << "InsertSort spend:" << (end - begin) * 1.0 / CLOCKS_PER_SEC << "s" << endl;
 
-	//begin = clock();
-	//ShellSort(drr, COUNT);
-	//end = clock();
-	//cout << "ShellSort spend:" << (end - begin) * 1.0 / CLOCKS_PER_SEC << "s" << endl;
+	begin = clock();
+	ShellSort(drr, COUNT);
+	end = clock();
+	cout << "ShellSort spend:" << (end - begin) * 1.0 / CLOCKS_PER_SEC << "s" << endl;
 }
 #endif
 
+#if 0
 int main()
 {
 	int arr[10];
@@ -138,7 +161,8 @@ int main()
 
 	//BubbleSort(arr, 10);
 	//ChoiceSort(arr, 10);
-	InsertSort(arr, 10);
+	//InsertSort(arr, 10);
+	ShellSort(arr, 10);
 
 	for (int v : arr)
 	{
@@ -146,3 +170,4 @@ int main()
 	}
 	cout << endl;
 }
+#endif
