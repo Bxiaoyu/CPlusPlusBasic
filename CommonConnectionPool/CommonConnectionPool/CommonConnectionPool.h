@@ -17,7 +17,7 @@ private:
 	ConnectionPool();
 
 	// 加载数据库配置文件
-	void LoadConfigFile();
+	bool LoadConfigFile();
 
 	std::string ip_;         // MySQL的IP地址
 	unsigned short port_;    // MySQL端口号 3306
