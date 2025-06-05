@@ -48,7 +48,7 @@ void QuickSort(int arr[], int begin, int end)
 		return;
 
 	//// 随着快排算法执行，小范围趋于有序的数据采用插入排序优化性能
-	//if (end - begin == 100)
+	//if (end - begin <= 32)
 	//{
 	//	InsertSort(arr, begin, end);
 	//	return;
