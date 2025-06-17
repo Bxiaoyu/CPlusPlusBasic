@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stack>
 #include <queue>
+#include <cmath>
 
 using namespace std;
 
@@ -351,7 +352,104 @@ public:
 	// 判断二叉树是否是BST树
 	bool isBSTree()
 	{
-		return isBSTree(root_);
+		Node* node = nullptr;
+		return isBSTree(root_, node);
+	}
+
+	// 判断二叉树的子树
+	bool isChildTree(BSTree<T, Comp>& child)
+	{
+		if (child.root_ == nullptr)
+		{
+			return true;
+		}
+
+		Node* cur = root_;
+		while (cur != nullptr)
+		{
+			if (cur->data_ == child.root_->data_)
+			{
+				break;
+			}
+			else if (comp_(cur->data_, child.root_->data_))
+			{
+				cur = cur->right_;
+			}
+			else
+			{
+				cur = cur->left_;
+			}
+		}
+
+		if (cur == nullptr)
+		{
+			return false;
+		}
+
+		return isChildTree(cur, child.root_);
+	}
+
+	// 最近公共祖先节点
+	int getLCA(int val1, int val2)
+	{
+		Node* node =  getLCA(root_, val1, val2);
+		if (node == nullptr)
+		{
+			throw "No LCA!";
+		}
+		else
+		{
+			return node->data_;
+		}
+	}
+
+	// 镜像翻转
+	void mirrorFlip()
+	{
+		mirrorFlip(root_);
+	}
+
+	// 镜像对称
+	bool mirrorSymmetry()
+	{
+		if (root_ == nullptr)
+		{
+			return true;
+		}
+
+		return mirrorSymmetry(root_->left_, root_->right_);
+	}
+
+	// 重建二叉树
+	void rebuild(int pre[], int i, int j, int in[], int m, int n)
+	{
+		root_ = _rebuild(pre, i, j, in, m, n);
+	}
+
+	// 判断平衡树
+	bool isBalance()
+	{
+		int l = 0;
+		bool flag = true;
+		isBalance(root_, l, flag);
+		return flag;
+	}
+
+	// 求中序倒数第k个节点
+	int getVal(int k)
+	{
+		int i = 1;
+		Node* node = getVal(root_, k);
+		if (node == nullptr)
+		{
+			string err = "no No.";
+			err += k;
+			throw err;
+		}
+		else
+		{
+			return node->data_;
+		}
 	}
 
 public:
@@ -572,32 +670,195 @@ private:
 		}
 	}
 
-	// 判断二叉树是否是BST树
-	bool isBSTree(Node* node)
+	// 判断二叉树是否是BST树，利用BST树中序遍历时升序的特点
+	bool isBSTree(Node* node, Node*& pre)
 	{
 		if (node == nullptr)
 		{
 			return true;
 		}
 
-		// V
-		if (node->left_ != nullptr && comp_(node->data_, node->left_->data_))
+		if (!isBSTree(node->left_, pre))  // L 判断递归条件，如果左子树已经不满足条件，则直接返回
 		{
 			return false;
 		}
 
-		if (node->right_ != nullptr && comp_(node->right_->data_, node->data_))
+		if (pre != nullptr)
 		{
-			return false;
+			if (comp_(node->data_, pre->data_))  // 主要判断使递归结束的条件
+			{
+				return false;
+			}
 		}
+		pre = node;  // 更新中序遍历的前驱节点
 
-		if (!isBSTree(node->left_))  // L 判断当前节点的左子树
-		{
-			return false;
-		}
-
-		return isBSTree(node->right_);  // R 判断当前节点的右子树
+		return isBSTree(node->right_, pre);  // R
 	}
+
+	// 判断是否是子树
+	bool isChildTree(Node* father, Node* child)
+	{
+		if (father == nullptr && child == nullptr)
+		{
+			return true;
+		}
+
+		if (father == nullptr)  // 子树有的节点，当前二叉树没有
+		{
+			return false;
+		}
+
+		if (child == nullptr)
+		{
+			return true;
+		}
+
+		// 判断值不同
+		if (father->data_ != child->data_)  // V
+		{
+			return false;
+		}
+
+		return isChildTree(father->left_, child->left_) && isChildTree(father->right_, child->right_);  // L R
+	}
+
+	// 最近公共祖先节点
+	Node* getLCA(Node* node, int val1, int val2)
+	{
+		if (node == nullptr)
+		{
+			return nullptr;
+		}
+
+		if (comp_(node->data_, val1) && comp_(node->data_, val2))
+		{
+			return getLCA(node->right_, val1, val2);
+		}
+		else if (comp_(val1, node->data_) && comp_(val2, node->data_))
+		{
+			return getLCA(node->left_, val1, val2);
+		}
+		else
+		{
+			return node;
+		}
+	}
+
+	// 镜像翻转
+	void mirrorFlip(Node* node)
+	{
+		if (node == nullptr)
+		{
+			return;
+		}
+
+		// V
+		Node* tmp = node->left_;
+		node->left_ = node->right_;
+		node->right_ = tmp;
+
+		mirrorFlip(node->left_);   // L
+		mirrorFlip(node->right_);  // R
+	}
+
+	// 镜像对称
+	bool mirrorSymmetry(Node* node1, Node* node2)
+	{
+		if (node1 == nullptr && node2 == nullptr)
+		{
+			return true;
+		}
+
+		if (node1 == nullptr || node2 == nullptr)
+		{
+			return false;
+		}
+		
+		if (node1->data_ != node2->data_)
+		{
+			return false;
+		}
+
+		return mirrorSymmetry(node1->left_, node2->right_)
+			&& mirrorSymmetry(node1->right_, node2->left_);
+	}
+
+	// 重建二叉树
+	Node* _rebuild(int pre[], int i, int j, int in[], int m, int n)
+	{
+		if (i > j || m > n)
+		{
+			return nullptr;
+		}
+
+		// 创建当前子树的根节点
+		Node* node = new Node(pre[i]);  // 拿前序的第一个数字创建子树根节点 V
+		for (int k = m; k <= n; ++k)
+		{
+			if (pre[i] == in[k])  // 在中序遍历中找子树根节点的下表k
+			{
+				node->left_ = _rebuild(pre, i + 1, i + (k - m), in, m, k - 1);   // L
+				node->right_ = _rebuild(pre, i + (k - m) + 1, j, in, k + 1, n);  // R
+				return node;
+			}
+		}
+
+		return node;
+	}
+
+	// 判断平衡树，递归过程中，记录节点高度值，返回节点高度值
+	int isBalance(Node* node, int l, bool& flag)
+	{
+		if (node == nullptr)
+		{
+			return 1;
+		}
+
+		int left = isBalance(root_->left_, l + 1, flag);    // L
+		if (!flag)
+		{
+			return left;
+		}
+
+		int right = isBalance(root_->right_, l + 1, flag);  // R
+		if (!flag)
+		{
+			return right;
+		}
+
+		// V
+		if (abs(left - right) > 1)  // 节点失衡
+		{
+			flag = false;
+		}
+
+		return max(left, right);
+	}
+
+	// 求中序倒数第k个节点
+	int i = 1;
+	Node* getVal(Node* node, int k)
+	{
+		if (node == nullptr)
+		{
+			return nullptr;
+		}
+
+		Node* left = getVal(node->right_, k);  // R
+		if (left != nullptr)
+		{
+			return left;
+		}
+
+		// V
+		if (i++ == k)  // 在VRL的顺序下，找到正数第K个元素
+		{
+			return node;
+		}
+
+		return getVal(node->left_, k);  // L
+	}
+
 };
 
 void test01() // 测试是否是BST树
@@ -618,16 +879,92 @@ void test01() // 测试是否是BST树
 	cout << bst.isBSTree() << endl;
 }
 
+void test02() // 测试子树判断问题
+{
+	int ar[] = { 58,24,67,0,34,62,69,5,41,64,78 };
+	BSTree<int> bst;
+	for (int v : ar)
+	{
+		bst.insert(v);
+	}
+
+	using Node = BSTree<int>::Node;
+	BSTree<int> bst1;
+	bst1.root_ = new Node(67);
+	Node* node1 = new Node(62);
+	Node* node2 = new Node(69);
+	Node* node3 = new Node(60);
+	bst1.root_->left_ = node1;
+	bst1.root_->right_ = node2;
+	node1->left_ = node3;
+
+	cout << bst.isChildTree(bst1) << endl;
+}
+
+void test03() // 测试LCA问题
+{
+	int ar[] = { 58,24,67,0,34,62,69,5,41,64,78 };
+	BSTree<int> bst;
+	for (int v : ar)
+	{
+		bst.insert(v);
+	}
+
+	cout << bst.getLCA(64, 62) << endl;
+}
+
+void test04() // 测试镜像对称
+{
+	using Node = BSTree<int>::Node;
+	BSTree<int> bst;
+	bst.root_ = new Node(40);
+	Node* node1 = new Node(20);
+	Node* node2 = new Node(20);
+	Node* node3 = new Node(10);
+	Node* node4 = new Node(15);
+	Node* node5 = new Node(15);
+	Node* node6 = new Node(10);
+
+	bst.root_->left_ = node1;
+	bst.root_->right_ = node2;
+	node1->left_ = node3;
+	node1->right_ = node4;
+	node2->left_ = node5;
+	//node2->right_ = node6;
+
+	cout << bst.mirrorSymmetry() << endl;
+}
+
+void test05() // 测试重建二叉树
+{
+	BSTree<int> bst;
+	int pre[] = { 58,24,0,5,34,41,67,62,64,69,78 };
+	int in[] = { 0,5,24,34,41,58,62,64,67,69,78 };
+	bst.rebuild(pre, 0, 10, in, 0, 10);
+	bst.preOrder();
+	bst.inOrder();
+}
+
 int main()
 {
-	test01();
-	//int arr[] = { 58, 24, 67, 0, 34, 62, 69, 5, 41, 64, 78 };
-	//BSTree<int> bst;
-	//for (auto v : arr)
-	//{
-	//	//bst.n_insert(v);
-	//	bst.insert(v);
-	//}
+	//test05();
+	//test04();
+	//test03();
+	//test02();
+	//test01();
+
+	int arr[] = { 58, 24, 67, 0, 34, 62, 69, 5, 41, 64, 78 };
+	BSTree<int> bst;
+	for (auto v : arr)
+	{
+		//bst.n_insert(v);
+		bst.insert(v);
+	}
+
+	bst.inOrder();
+	cout << bst.getVal(2) << endl;
+	//bst.mirrorFlip();
+	//bst.inOrder();
 
 	//vector<int> vec;
 	//bst.findValues(vec, 10, 60);
