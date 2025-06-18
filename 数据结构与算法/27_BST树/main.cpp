@@ -2,6 +2,7 @@
 #include <stack>
 #include <queue>
 #include <cmath>
+#include <functional>
 
 using namespace std;
 
@@ -12,7 +13,31 @@ class BSTree
 public:
 	BSTree(Comp	comp = Comp()) : root_(nullptr), comp_(comp) {}
 
-	~BSTree() {}
+	~BSTree() 
+	{
+		// 层序遍历思想释放BST树所有节点资源
+		if (root_ != nullptr)
+		{
+			queue<Node*> q;
+			q.push(root_);
+			while (!q.empty())
+			{
+				Node* front = q.front();
+				q.pop();
+
+				if (front->left_ != nullptr)
+				{
+					q.push(front->left_);
+				}
+				if (front->right_ != nullptr)
+				{
+					q.push(front->right_);
+				}
+
+				delete front;
+			}
+		}
+	}
 
 public:
 	// 非递归插入操作
@@ -945,6 +970,17 @@ void test05() // 测试重建二叉树
 	bst.inOrder();
 }
 
+void test06()
+{
+	using Elm = pair<int, string>;
+	using Func = function<bool(Elm, Elm)>;
+	BSTree<Elm, Func> bst([](Elm p1, Elm p2)->bool
+		{
+			return p1.first > p2.first;
+		}
+	);
+}
+
 int main()
 {
 	//test05();
@@ -953,16 +989,16 @@ int main()
 	//test02();
 	//test01();
 
-	int arr[] = { 58, 24, 67, 0, 34, 62, 69, 5, 41, 64, 78 };
-	BSTree<int> bst;
-	for (auto v : arr)
-	{
-		//bst.n_insert(v);
-		bst.insert(v);
-	}
+	//int arr[] = { 58, 24, 67, 0, 34, 62, 69, 5, 41, 64, 78 };
+	//BSTree<int> bst;
+	//for (auto v : arr)
+	//{
+	//	//bst.n_insert(v);
+	//	bst.insert(v);
+	//}
 
-	bst.inOrder();
-	cout << bst.getVal(2) << endl;
+	//bst.inOrder();
+	//cout << bst.getVal(2) << endl;
 	//bst.mirrorFlip();
 	//bst.inOrder();
 

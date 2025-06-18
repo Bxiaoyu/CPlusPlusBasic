@@ -57,6 +57,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "26_串操作", "26_串操�
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "27_BST树", "27_BST树\27_BST树.vcxproj", "{E638C3A0-E4B7-454C-B33D-67C86838573D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "28_AVL树", "28_AVL树\28_AVL树.vcxproj", "{CF62C749-E14A-4B86-A8F9-DA493BF925ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -281,6 +283,14 @@ Global
 		{E638C3A0-E4B7-454C-B33D-67C86838573D}.Release|x64.Build.0 = Release|x64
 		{E638C3A0-E4B7-454C-B33D-67C86838573D}.Release|x86.ActiveCfg = Release|Win32
 		{E638C3A0-E4B7-454C-B33D-67C86838573D}.Release|x86.Build.0 = Release|Win32
+		{CF62C749-E14A-4B86-A8F9-DA493BF925ED}.Debug|x64.ActiveCfg = Debug|x64
+		{CF62C749-E14A-4B86-A8F9-DA493BF925ED}.Debug|x64.Build.0 = Debug|x64
+		{CF62C749-E14A-4B86-A8F9-DA493BF925ED}.Debug|x86.ActiveCfg = Debug|Win32
+		{CF62C749-E14A-4B86-A8F9-DA493BF925ED}.Debug|x86.Build.0 = Debug|Win32
+		{CF62C749-E14A-4B86-A8F9-DA493BF925ED}.Release|x64.ActiveCfg = Release|x64
+		{CF62C749-E14A-4B86-A8F9-DA493BF925ED}.Release|x64.Build.0 = Release|x64
+		{CF62C749-E14A-4B86-A8F9-DA493BF925ED}.Release|x86.ActiveCfg = Release|Win32
+		{CF62C749-E14A-4B86-A8F9-DA493BF925ED}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
