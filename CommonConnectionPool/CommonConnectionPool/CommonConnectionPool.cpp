@@ -18,5 +18,22 @@ bool ConnectionPool::LoadConfigFile()
         return false;
     }
 
+    while (!feof(pf))
+    {
+        char line[1024] = { 0 };
+        fgets(line, 1024, pf);
+        std::string str = line;
 
+        int idx = str.find('=', 0);
+        if (idx == -1)
+        {
+            continue;
+        }
+
+        int endidx = str.find('\n', idx);
+        std::string key = str.substr(0, idx);
+        std::string value = str.substr(idx + 1, endidx - idx - 1);
+
+        std::cout << key << ":" << value << std::endl;
+    }
 }
