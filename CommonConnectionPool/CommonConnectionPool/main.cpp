@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Connection.h"
+#include "CommonConnectionPool.h"
 
 
 using namespace std;
@@ -12,5 +13,6 @@ int main()
 	//	"Zhang San", 20, "male");
 	//conn.connect("127.0.0.1", 3306, "root", "adminroot", "chat");
 	//conn.update(sql);
+
 	return 0;
 }
