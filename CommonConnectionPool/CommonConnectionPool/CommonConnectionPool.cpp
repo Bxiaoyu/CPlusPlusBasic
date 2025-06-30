@@ -11,6 +11,37 @@ ConnectionPool* ConnectionPool::GetConnectionPool()
     return &instance;
 }
 
+std::shared_ptr<Connection> ConnectionPool::GetConnection()
+{
+    unique_lock<mutex> lock(queueMtx_);
+    while (connectionQue_.empty())
+    {
+        if (cv_status::timeout == cv_.wait_for(lock, std::chrono::milliseconds(connectionTimeout_)))
+        {
+            if (connectionQue_.empty())
+            {
+                LOG("Get connection timeout...");
+                return nullptr;
+            }
+        }
+    }
+
+    /*
+    * shared_ptr智能指针析构时，会把connection资源直接delete掉，相当于调用了connection的析构，
+    * connection就被close掉了。这里需要自定义shared_ptr的资源释放方式，把connection直接归还到queue中
+    */
+    shared_ptr<Connection> sp(connectionQue_.front(),
+        [&](Connection* pcon) 
+        {
+            unique_lock<mutex> lock(queueMtx_);
+            connectionQue_.push(pcon);
+        });
+    connectionQue_.pop();
+    cv_.notify_all();  // 消费完连接以后，通知生产者线程检查一下，如果队列为空了，赶紧生产
+
+    return sp;
+}
+
 // 连接池构造
 ConnectionPool::ConnectionPool()
 {
@@ -27,7 +58,7 @@ ConnectionPool::ConnectionPool()
         Connection* p = new Connection();
         p->connect(ip_, port_, username_, password_, dbname_);
         connectionQue_.push(p);
-        ConnectionCnt_++;
+        connectionCnt_++;
     }
 
     // 启动一个新线程，作为连接的生产者
@@ -105,7 +136,19 @@ void ConnectionPool::ProduceConnectionTask()
         unique_lock<mutex> lock(queueMtx_);
         while (!connectionQue_.empty())
         {
-            cv_.wait(lock);
+            cv_.wait(lock);  // 队列不空，此处生产线程进入等待状态
         }
+
+        // 连接数量没有达到上限，继续创建新的连接
+        if (connectionCnt_ < maxSize_)
+        {
+            Connection* p = new Connection();
+            p->connect(ip_, port_, username_, password_, dbname_);
+            connectionQue_.push(p);
+            connectionCnt_++;
+        }
+
+        // 通知消费者线程，可以消费连接了
+        cv_.notify_all();
     }
 }

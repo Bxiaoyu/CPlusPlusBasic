@@ -43,6 +43,6 @@ private:
 
 	std::queue<Connection*> connectionQue_;  // 存储MySQL连接队列
 	std::mutex queueMtx_;                    // 维护连接队列的线程安全互斥锁
-	std::atomic_int ConnectionCnt_;          // 记录连接所创建的connection连接的总数量
+	std::atomic_int connectionCnt_;          // 记录连接所创建的connection连接的总数量
 	std::condition_variable cv_;             // 设置条件变量，用于连接生产线程和消费线程的通信
 };
