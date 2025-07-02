@@ -30,6 +30,9 @@ private:
 	// 运行在独立线程中，专门负责生产新连接
 	void ProduceConnectionTask();
 
+	// 扫描超过maxIdleTime时间的空闲连接，进行多余的连接回收
+	void scanConnectionTask();
+
 private:
 	std::string ip_;         // MySQL的IP地址
 	unsigned short port_;    // MySQL端口号 3306
