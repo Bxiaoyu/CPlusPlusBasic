@@ -39,6 +39,7 @@ int main()
 }
 #endif
 
+#if 0
 /*
 * 整数选择问题：给定一组数组，从里面挑出一组数，并让其整数之和与剩下的整数之和的差最小
 */
@@ -100,5 +101,73 @@ int main()
 	cout << endl;
 	cout << "min:" << minNum << endl;
 
+	return 0;
+}
+#endif
+
+/*
+* 整数选择问题：给定2n个整数，从里面挑出n个整数，并让其整数之和与剩下的整数之和的差最小
+*/
+vector<int> arr = { 12,6,7,11,16,3,8,9 };
+int length = arr.size();
+vector<int> x;      // 记录子集中选择的元素
+vector<int> bestx;  // 记录最优解
+int sum = 0;        // 记录子集中所选数字的和
+int r = 0;          // 记录未选择数字的和
+unsigned int minNum = 0xFFFFFFFF;  // 记录最小差值
+int cnt = 0;        // 记录遍历的子集个数，用于测试
+
+void func(int i)
+{
+	if (i == length)
+	{
+		// 得到子集树的一个解，对应一个叶子节点
+		cnt++;
+		if (x.size() != length / 2)
+		{
+			return;
+		}
+
+		int result = abs(sum - r);
+		if (result < minNum)
+		{
+			minNum = result;
+			bestx = x;
+		}
+	}
+	else
+	{
+		if (x.size() < length / 2)  // 剪左树枝，提高算法效率，选择数字的前提：还未选择够n个整数
+		{
+			sum += arr[i];
+			r -= arr[i];
+			x.push_back(arr[i]);
+			func(i + 1);  // 遍历i的左孩子，表示选择i号位元素
+			sum -= arr[i];
+			r += arr[i];
+			x.pop_back();
+		}
+
+		// 这里右树枝能不能减呢？已选择数字的个数 + 未来能选择的所有数字的个数(i+1,i+2...n) >= n个元素
+		func(i + 1);  // 遍历i的右孩子，表示不选择i号位元素
+	}
+}
+
+int main()
+{
+	for (int v : arr)
+	{
+		r += v;
+	}
+
+	func(0);
+
+	for (int v : bestx)
+	{
+		cout << v << " ";
+	}
+	cout << endl;
+	cout << "min: " << minNum << endl;
+	cout << "cnt: " << cnt << endl;
 	return 0;
 }
