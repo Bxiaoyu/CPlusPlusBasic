@@ -399,17 +399,47 @@ int main()
 /*
 * 排列树解决八皇后问题
 */
+int cnt = 0;  // 统计排列总数
+
+void swap(int arr[], int i, int j)
+{
+	int tmp = arr[i];
+	arr[i] = arr[j];
+	arr[j] = tmp;
+}
+
+bool judge(int arr[], int i)  // i表示当前放置皇后棋子的位置
+{
+	for (int j = 0; j < i; ++j)
+	{
+		if (i == j || arr[i] == arr[j] || abs(i-j) == abs(arr[i] - arr[j]))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
 void func(int arr[], int i, int length)
 {
 	if (i == length)
 	{
-
+		cnt++;
+		for (int j = 0; j < length; ++j)
+		{
+			cout << arr[j] << " ";
+		}
+		cout << endl;
 	}
 	else
 	{
 		for (int k = i; k < length; ++k)
 		{
-
+			swap(arr, i, k);
+			if(judge(arr, i))  // 判断第i个位置的元素是否符合八皇后的条件
+				func(arr, i+1, length);  // 生成孩子节点，即一系列排列方式
+			swap(arr, i, k);
 		}
 	}
 }
@@ -420,5 +450,6 @@ int main()
 	int arr[] = { 1,2,3,4,5,6,7,8 };
 	int n = 8;
 	func(arr, 0, n);
+	cout << "总共: " << cnt << " 种." << endl;
 	return 0;
 }
