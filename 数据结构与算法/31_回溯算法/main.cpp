@@ -399,6 +399,7 @@ int main()
 /*
 * 排列树解决八皇后问题
 */
+#if 0
 int cnt = 0;  // 统计排列总数
 
 void swap(int arr[], int i, int j)
@@ -451,5 +452,47 @@ int main()
 	int n = 8;
 	func(arr, 0, n);
 	cout << "总共: " << cnt << " 种." << endl;
+	return 0;
+}
+#endif
+
+/*
+* 另一种全排列代码，满足leetcode的测试用例要求
+*/
+int arr[] = { 1,2,3 };
+const int N = 3;
+bool state[N];  // 记录所有元素是否被选择的状态：true-选择 false-未选择
+vector<int> vec;
+
+void func(int i)
+{
+	if (i == N)
+	{
+		for (int v : vec)
+		{
+			cout << v << " ";
+		}
+		cout << endl;
+	}
+	else
+	{
+		for (int k = 0; k < N; ++k)
+		{
+			if (!state[k])
+			{
+				state[k] = true;
+				vec.push_back(arr[k]);
+				func(i + 1);
+				vec.pop_back();
+				state[k] = false;
+			}
+		}
+	}
+}
+
+int main()
+{
+	func(0);
+
 	return 0;
 }

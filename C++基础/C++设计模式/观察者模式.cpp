@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <list>
+#include <functional>
 #include <memory>
 
 using namespace std;
@@ -17,6 +18,13 @@ using namespace std;
 *              Subject（主题）主题有更改，应该及时通知相应的观察者，去处理相应事件
 */
 
+/*
+* 经典观察者模式实现
+* 该观察者模式是经典模式，但是存在缺陷：
+（1）需要继承，继承是强对象关系，只能对特定的观察者才有效，即必须是Observer抽象类的派生类才行；
+
+（2）观察者被通知的接口参数不支持变化，导致观察者不能应付接口的变化，并且这个观察者还不能带参数 ；
+*/
 #if 0
 // 观察者抽象类
 class Observer
@@ -149,4 +157,151 @@ int main()
 	}
 }
 
+#endif
+
+
+/*
+* 使用C++11改进实现方式
+* C++11 实现的观察者模式，内部维护了一个泛型函数列表，观察者只需要将观察者函数注册进来即可，消除了继承导致的强耦合。
+* 通知接口使用了可变参数模板，支持任意参数，消除了接口变化的影响。
+
+* 改进之后的观察者模式和C# 中的event类似，通过定义委托类型来限定观察者，不要求观察者必须某个类派生，当需要和原来不同的观察者时，
+* 只需要定义一个新的event类型即可，通过event还可方便地增加或移除观察者。
+*/
+#if 0
+// 抽象主题类
+class BaseSubject
+{
+public:
+	BaseSubject(const BaseSubject&) = delete;
+	BaseSubject& operator=(const BaseSubject&) = delete;
+	BaseSubject() = default;
+	~BaseSubject() = default;
+};
+
+// 具体主题类
+template<typename Func>
+class Event : public BaseSubject
+{
+public:
+	Event() 
+		: observerId_(0)
+	{
+	}
+
+	~Event() = default;
+
+	// 注册观察者，左值
+	int addObserver(const Func& f)
+	{
+		return assign(f);
+	}
+
+	// 注册观察者，支持右值引用
+	int addObserver(Func&& f)
+	{
+		return assign(f);
+	}
+
+	// 移除观察者
+	void removeObserver(int key)
+	{
+		observerMap_.erase(key);
+	}
+
+	// 通知所有观察者
+	template<typename ...Args>
+	void notify(Args&&... args)
+	{
+		for (auto& it : observerMap_)
+		{
+			auto& func = it.second;
+			func(std::forward<Args>(args)...);
+		}
+	}
+
+private:
+	// 保存观察者并分配观察者编号
+	template<typename F>
+	int assign(F&& f)
+	{
+		int k = observerId_++;
+		observerMap_.emplace(k, std::forward<F>(f));
+		return k;
+	}
+
+private:
+	int observerId_;  // 观察者编号
+	unordered_map<int, Func> observerMap_;  // 观察者列表
+};
+
+// 定义函数类模板
+using observerFunc = std::function<int(int, int)>;
+
+class Observer1
+{
+public:
+	int operator()(int a, int b)
+	{
+		cout << "Observer函数对象的事件2被调用... 结果：";
+		int res = a + b;
+		cout << res << endl;
+		return res;
+	}
+};
+
+class Observer2
+{
+public:
+	int observerFunc(int a, int b)
+	{
+		cout << "Observer成员函数事件3被调用... 结果：";
+		int res = a + b;
+		cout << res << endl;
+		return res;
+	}
+};
+
+int globalObserverFunc(int a, int b)
+{
+	cout << "全局的globalObserverFunc事件4被调用... 结果：";
+	int res = a + b;
+	cout << res << endl;
+	return res;
+}
+
+int main()
+{
+	Event<observerFunc> event;
+
+	// 调用lambda表达式的观察者函数
+	int id1 = event.addObserver([](int a, int b)->int
+		{
+			cout << "lambda函数的事件1被调用... 结果：";
+			int res = a + b;
+			cout << res << endl;
+			return res;
+		});
+
+	// 调用仿函数的观察者函数
+	int id2 = event.addObserver(Observer1());
+
+	// 调用成员函数的观察者函数
+	Observer2 obs2;
+	int id3 = event.addObserver(std::bind(&Observer2::observerFunc, obs2, std::placeholders::_1, std::placeholders::_2));
+
+	// 调用全局观察者函数
+	int id4 = event.addObserver(globalObserverFunc);
+
+	event.notify(10, 20);
+
+	// 移除1,3号观察者
+	cout << endl;
+	event.removeObserver(id1);
+	event.removeObserver(id3);
+
+	event.notify(20, 30);
+
+	return 0;
+}
 #endif
