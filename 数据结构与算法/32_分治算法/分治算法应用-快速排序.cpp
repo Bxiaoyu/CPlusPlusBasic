@@ -5,7 +5,7 @@
 using namespace std;
 
 /*
-* 分治算法
+* 分治算法思想应用 - 快排算法，快排求topK
 */
 
 int partation(vector<int>& vec, int i, int j)
@@ -135,8 +135,10 @@ void test_max_select_topK()
 	cout << endl;
 }
 
+#if 0
 int main()
 {
 	test_max_select_topK();
 	return 0;
 }
+#endif

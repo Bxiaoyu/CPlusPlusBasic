@@ -123,7 +123,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="K个有序链表合并.cpp" />
+    <ClCompile Include="分治算法应用-快速排序.cpp" />
+    <ClCompile Include="分治算法应用-归并排序.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
