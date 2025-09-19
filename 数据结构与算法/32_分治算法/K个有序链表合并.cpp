@@ -97,6 +97,7 @@ Node* merge_link(vector<Node*> link, int i, int j)
 	return merge_two_link(left, right);  // 归结成合并两个有序链表
 }
 
+#if 0
 int main()
 {
 	Node* p1 = init_link({ 3,6,8 });
@@ -119,3 +120,4 @@ int main()
 	}
 	cout << endl;
 }
+#endif
