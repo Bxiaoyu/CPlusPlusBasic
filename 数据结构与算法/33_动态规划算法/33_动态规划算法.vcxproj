@@ -123,7 +123,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LCS最长公共子序列.cpp" />
     <ClCompile Include="斐波那契数列.cpp" />
+    <ClCompile Include="最大子段和.cpp" />
+    <ClCompile Include="最长非降子序列LIS.cpp" />
     <ClCompile Include="硬币选择问题.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

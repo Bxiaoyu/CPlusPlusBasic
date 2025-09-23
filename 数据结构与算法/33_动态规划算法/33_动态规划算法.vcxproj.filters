@@ -21,5 +21,14 @@
     <ClCompile Include="斐波那契数列.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="最大子段和.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="最长非降子序列LIS.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LCS最长公共子序列.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
