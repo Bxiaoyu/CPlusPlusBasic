@@ -111,6 +111,7 @@ int lcs_3(string str1, int n, string str2, int m)
 			if (str1[i-1] == str2[j-1])
 			{
 				dp[i][j] = 1 + dp[i - 1][j - 1];
+				path[i][j] = 1;
 			}
 			else
 			{
@@ -119,14 +120,18 @@ int lcs_3(string str1, int n, string str2, int m)
 				if (l1 >= l2)
 				{
 					dp[i][j] = l1;
+					path[i][j] = 3;
 				}
 				else
 				{
 					dp[i][j] = l2;
+					path[i][j] = 2;
 				}
 			}
 		}
 	}
+
+	return dp[n + 1][m + 1];
 }
 
 // 输出公共子序列
@@ -151,6 +156,31 @@ void back_trace(string str, int n, int m)
 		else  // path[n][m] == 3
 		{
 			back_trace(str, n - 1, m);  // 向上
+		}
+	}
+}
+
+void back_trace_2(string str, int n, int m)
+{
+	if (n <= 0 || m <= 0)
+	{
+		return;
+	}
+
+	if (path[n][m] == 1)
+	{
+		back_trace_2(str, n - 1, m - 1);  // 走斜线
+		cout << str[n-1];  // 回溯过程中再打印
+	}
+	else
+	{
+		if (path[n][m] == 2)
+		{
+			back_trace_2(str, n, m - 1);  // 向左
+		}
+		else  // path[n][m] == 3
+		{
+			back_trace_2(str, n - 1, m);  // 向上
 		}
 	}
 }
@@ -204,9 +234,47 @@ void test_lcs_2()
 	delete[] path;
 }
 
+void test_lcs_3()
+{
+	int n = str1.size();
+	int m = str2.size();
+	dp = new int* [n + 1];
+	for (int i = 0; i < n + 1; ++i)
+	{
+		dp[i] = new int[m + 1];
+		for (int j = 0; j < m + 1; ++j)
+		{
+			dp[i][j] = 0;
+		}
+	}
+
+	path = new int* [n + 1];
+	for (int i = 0; i < n + 1; ++i)
+	{
+		path[i] = new int[m + 1]();
+	}
+
+	int size = lcs_3(str1, n-1, str2, m-1);
+	cout << "lcs length: " << size << endl;
+	cout << "cnt: " << cnt_ << endl;
+
+	back_trace_2(str1, n, m);
+
+	for (int i = 0; i < n + 1; ++i)
+		delete[] dp[i];
+	delete[] dp;
+
+	for (int i = 0; i < m + 1; ++i)
+		delete[] path[i];
+	delete[] path;
+}
+
+#if 0
 int main()
 {
-	test_lcs_1();
-	test_lcs_2();
+	//test_lcs_1();
+	//test_lcs_2();
+	test_lcs_3();
 	return 0;
 }
+#endif

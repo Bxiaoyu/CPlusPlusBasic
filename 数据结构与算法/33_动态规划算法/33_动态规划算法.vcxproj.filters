@@ -27,7 +27,13 @@
     <ClCompile Include="最长非降子序列LIS.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="LCS最长公共子序列.cpp">
+    <ClCompile Include="最长公共子序列LCS.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="背包问题.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="三角数组求和.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
